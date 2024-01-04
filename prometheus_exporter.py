@@ -1,28 +1,15 @@
 import csv
-import datetime
-
 import logging
-
 import socket
-
 import sys
-
 import time
-
 from pathlib import Path
-
 from typing import List, Union, Optional
-
 # noinspection PyUnresolvedReferences
-
 from prometheus_client.core import Gauge, Histogram  # noinspection PyUnresolvedReferences
-
 from prometheus_client.core import GaugeMetricFamily, REGISTRY, CounterMetricFamily
-
 # noinspection PyUnresolvedReferences
-
 from prometheus_client import start_http_server
-
 import argparse
 
 DEFAULT_ROWS = [{'name': 'Jack', 'age': '15', 'id': 1024}, {'name': 'JackJill', 'age': '12', 'id': 123},
@@ -60,13 +47,9 @@ def parser():
 
 def main():
     args = parser().parse_args()
-
     host = args.host or socket.gethostname()
-
     start_http_server(int(args.port), addr=host)
-
     log.info(f'Listening at http://{host}:{args.port}/metrics')
-    print(METRIC_PATH)
 
     REGISTRY.register(MetricsCollector())
     while True:
